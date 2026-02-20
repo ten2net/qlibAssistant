@@ -56,7 +56,7 @@ jobs:
           echo ">>> 检查压缩包是否存在..."
           if [ -f "./model_pkl/qlib_mlruns.tar.gz" ]; then
             echo "✅ 找到压缩包，开始执行解压..."
-            tar -zxvf qlib_backup.tar.gz -C ~
+            tar -zxvf ./model_pkl/qlib_mlruns.tar.gz -C ~
             echo "✅ 解压完成"
           else
             echo "❌ 错误: 在 ./model_pkl/ 目录下未找到 qlib_mlruns.tar.gz"
