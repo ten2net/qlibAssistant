@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9' # 根据你的项目需求调整版本
+          python-version: '3.12' # 根据你的项目需求调整版本
 
       # 2. 安装项目依赖和测试工具
       - name: Install dependencies
