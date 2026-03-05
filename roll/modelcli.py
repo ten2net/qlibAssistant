@@ -140,7 +140,16 @@ class ModelCLI:
         task = rec.load_object("task")
         ic_info, _ = self.get_ic_info(rec)
         data_train_vec, train_time_vec = self.get_train_time(rec)
-        print("\t", rec.id, task["model"]['class'], task['dataset']['kwargs']['handler']['class'], ic_info, data_train_vec, train_time_vec)
+        info = {
+            "id": rec.id,
+            "model": task["model"]['class'],
+            "dataset": task['dataset']['kwargs']['handler']['class'],
+            "ic_info": ic_info,
+            "data_train_vec": data_train_vec,
+            "train_time_vec": train_time_vec
+        }
+        print(info)
+        return info
 
     def ls(self, all=False):
         tqdm.__init__ = partialmethod(tqdm.__init__, disable=True)
@@ -237,13 +246,28 @@ class ModelCLI:
 
         self._save_results(df_final, func_name, stock_list, latest_stock_list)
 
+    def _record_model_info(self, md_file = "model_info.md"):
+        print(f"record model info to {md_file}")
+        append_to_file(md_file, f"\n\n # model info \n\n")
+        model_list = self.get_model_list()
+        for mc in model_list:
+            exp = R.get_exp(experiment_name=mc.exp_name)
+            print(f"Experiment: {exp.name} {exp.id} (Recorders: {len(mc.rid)}/{len(exp.list_recorders())})")
+            append_to_file(md_file, f"Experiment: {exp.name} {exp.id} (Recorders: {len(mc.rid)}/{len(exp.list_recorders())})\n")
+            for rid in mc.rid:
+                info = self.print_rec(exp.get_recorder(recorder_id=rid))
+                append_to_file(md_file, f"\tRecorder: {rid}\n")
+                append_to_file(md_file, f"\t\tModel: {info}\n")
+
     def _save_results(self, df_final, func_name, stock_list, latest_stock_list):
         base_dir = Path(self.kwargs['analysis_folder']).expanduser()
         save_dir = base_dir / f"{func_name}_{datetime.datetime.now().strftime('%Y%m%d_%H_%M_%S')}"
         save_dir.mkdir(parents=True, exist_ok=True)
         md_file = save_dir / "total.md"
 
+        append_to_file(md_file, f"# params \n")
         append_to_file(md_file, f" {self.kwargs}\n\n")
+        self._record_model_info(md_file)
 
         if stock_list:
             for stock in stock_list:
