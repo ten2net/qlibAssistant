@@ -7,7 +7,7 @@ on:
   # 定时触发
   schedule:
     # 分 时 日 月 周 (UTC时间)
-    - cron: '0 13 * * *'
+    - cron: '0 12 * * *'
 
   # 保留手动触发按钮，方便调试
   workflow_dispatch:
@@ -62,8 +62,8 @@ jobs:
       - name: Run Train
         run: |
           echo "开始 train "
-          cd ./roll && python ./roll.py --pfx_name="EXP" --model_name="LightGBM" --dataset_name="Alpha158" --stock_pool="csi300" --rolling_type="custom" train start_custom
-          # cd ./roll && python ../script/run.py
+          # cd ./roll && python ./roll.py --pfx_name="EXP" --model_name="LightGBM" --dataset_name="Alpha158" --stock_pool="csi300" --rolling_type="custom" train start_custom
+          cd ./roll && python ../script/run.py
 
       - name: LS model
         run: |

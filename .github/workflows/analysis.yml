@@ -1,10 +1,10 @@
 name: Analysis
 
 on:
-  # 定时触发
-  schedule:
-    # 分 时 日 月 周 (UTC时间)
-    - cron: '0 13 * * *'
+  workflow_run:
+    workflows: ["Train model"] # 必须与第一个 Action 的 name 字段完全一致
+    types:
+      - completed
 
   # 保留手动触发按钮，方便调试
   workflow_dispatch:
