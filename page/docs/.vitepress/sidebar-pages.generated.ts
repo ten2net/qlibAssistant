@@ -34,4 +34,10 @@ export const pagesSidebar = {
     { text: '马后炮', link: '/pages/mahoupao/' },
     { text: '示例分析', link: '/pages/mahoupao/example' },
   ],
+  '/pages/notes/': [
+    { text: 'notes', link: '/pages/notes/' },
+  ],
+  '/qlibAssistant/pages/notes/': [
+    { text: 'notes', link: '/pages/notes/' },
+  ],
 }
