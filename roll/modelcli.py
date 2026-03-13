@@ -377,13 +377,30 @@ class ModelCLI:
         df['error'] = df['avg_score'] - df['real_label']
         df['abs_error'] = df['error'].abs()
 
-        # 统计 real_label > 0 的数量与比例
-        positive_count = (df['real_label'] > 0).sum()
-        zero_count = (df['real_label'] == 0).sum()
-        negative_count = (df['real_label'] < 0).sum()
-        total_count = len(df)
-        positive_ratio = positive_count / total_count if total_count > 0 else 0
-        print(f"预测正收益次数（total_count）: {total_count}，实际正收益次数（positive_count）: {positive_count}，zero数量: {zero_count}，负收益数量: {negative_count}，胜率: {positive_ratio:.2%}")
+        '''
+        统计 top10, top30, top50, top100 的胜率, 止盈>0, 止盈1% 止盈2% 止盈3% 止盈4% 等等的胜率
+        '''
+        top10_df = df.sort_values(by='avg_score', ascending=False).head(10)
+        top30_df = df.sort_values(by='avg_score', ascending=False).head(30)
+        top50_df = df.sort_values(by='avg_score', ascending=False).head(50)
+        top100_df = df.sort_values(by='avg_score', ascending=False).head(100)
+
+        top10_radio = ((top10_df['real_label'] * top10_df['avg_score']) > 0).sum() / len(top10_df)
+        top30_radio = ((top30_df['real_label'] * top30_df['avg_score']) > 0).sum() / len(top30_df)
+        top50_radio = ((top50_df['real_label'] * top50_df['avg_score']) > 0).sum() / len(top50_df)
+        top100_radio = ((top100_df['real_label'] * top100_df['avg_score']) > 0).sum() / len(top100_df)
+
+        top10_avg_profit = top10_df['real_label'].mean()
+        top30_avg_profit = top30_df['real_label'].mean()
+        top50_avg_profit = top50_df['real_label'].mean()
+        top100_avg_profit = top100_df['real_label'].mean()
+
+        print(
+            f"top10 胜率: {top10_radio:.2%}, top10 平均收益: {top10_avg_profit*100:.2f}%, "
+            f"top30 胜率: {top30_radio:.2%}, top30 平均收益: {top30_avg_profit*100:.2f}%, "
+            f"top50 胜率: {top50_radio:.2%}, top50 平均收益: {top50_avg_profit*100:.2f}%, "
+            f"top100 胜率: {top100_radio:.2%}, top100 平均收益: {top100_avg_profit*100:.2f}%"
+        )
 
     def _review_subdir(self, subdir):
         print(f"- {subdir.name}")
