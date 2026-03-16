@@ -278,7 +278,7 @@ class ModelCLI:
         if stock_list:
             for stock in stock_list:
                 res = df_final[df_final['instrument'] == stock]
-                append_to_file(md_file, f"\n\n # {stock}\n\n{res.to_markdown(index=False)}\n\n")
+                append_to_file(md_file, f"\n\n # {stock}\n\n{res.to_markdown(index=True)}\n\n")
         else:
             alpha158_df = self.get_alpha_data().reset_index()
             for date, group_df in df_final.groupby('datetime'):
@@ -304,10 +304,12 @@ class ModelCLI:
 
                 ret_df = pd.merge(ret_df, alpha158_df[alpha158_df['datetime'] == date], on='instrument', how='left', validate='one_to_one')
                 ret_filter_df = self.filter_ret_df(ret_df)
-                ret_df.to_csv(save_dir / f"{date_str}_ret.csv", index=False, encoding="utf-8-sig")
-                ret_filter_df.to_csv(save_dir / f"{date_str}_filter_ret.csv", index=False, encoding="utf-8-sig")
+                ret_df.to_csv(save_dir / f"{date_str}_ret.csv", index=True, encoding="utf-8-sig")
+                # 过滤后的结果重置索引，从 0 开始
+                ret_filter_df = ret_filter_df.reset_index(drop=True)
+                ret_filter_df.to_csv(save_dir / f"{date_str}_filter_ret.csv", index=True, encoding="utf-8-sig")
 
-        df_final.to_csv(save_dir / "total.csv", index=False, encoding="utf-8-sig")
+        df_final.to_csv(save_dir / "total.csv", index=True, encoding="utf-8-sig")
 
     def filter_ret_df(self, df):
         # 稳健性过滤逻辑
