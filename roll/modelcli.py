@@ -283,7 +283,23 @@ class ModelCLI:
         alpha158_df = self.get_alpha_data().reset_index()
         for date, group_df in df_final.groupby('datetime'):
             date_str = str(date.date())
-            ret_df = group_df.groupby('instrument')['score'].agg(avg_score='mean', pos_ratio=lambda x: (x > 0).mean()).reset_index()
+            # 使用模型权重(基于 rid_rank_icir 归一化得到的 self.rid_weight)计算加权平均分
+            group_df = group_df.copy()
+            group_df['weight'] = group_df['rid'].map(self.rid_weight).fillna(0.0)
+            ret_df = (
+                group_df.groupby('instrument')
+                .apply(
+                    lambda g: pd.Series(
+                        {
+                            "avg_score": (g['score'] * g['weight']).sum() / g['weight'].sum()
+                            if g['weight'].sum() != 0
+                            else g['score'].mean(),
+                            "pos_ratio": (g['score'] > 0).mean(),
+                        }
+                    )
+                )
+                .reset_index()
+            )
 
             cols_to_restore = ['instrument', 'real_label', 'error', 'abs_error']
             existing_cols = [c for c in cols_to_restore if c in group_df.columns]
