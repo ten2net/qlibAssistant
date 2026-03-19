@@ -5,7 +5,7 @@
 
 **每晚自动跑模型，次日给你一份 CSI300 选股清单。准不准？有复盘数据可查。**
 
-👉 [查看每日预测结果](https://touhoufan2024.github.io/qlibAssistant/) · 📊 [复盘统计：历史预测准确度](https://touhoufan2024.github.io/qlibAssistant/pages/mahoupao/review_result.html)
+👉 [查看每日预测结果](https://touhoufan2024.github.io/qlibAssistant/) · 📊 [复盘统计：历史预测准确度](https://touhoufan2024.github.io/qlibAssistant/pages/mahoupao/review_result.html)  📈 [简单topk策略 净值曲线](https://touhoufan2024.github.io/qlibAssistant/pages/mahoupao/nav_curve.html)
 
 > ⚠️ 量化预测仅供参考，不构成投资建议。股市有风险，入市需谨慎。
 
@@ -14,7 +14,7 @@
 ## 为什么值得一看？
 
 - **全自动**：每晚 8 点左右自动拉数据、训练、选股，次日直接看结果
-- **多模型集成**：20 个模型（4 种算法 × 5 种回溯周期）投票，降低单模型过拟合
+- **多模型集成**：25 个模型（5 种算法 × 5 种回溯周期）投票，降低单模型过拟合
 - **可验证**：有复盘统计，历史预测的胜率、止盈表现一目了然
 - **规则过滤**：按波动率、动量等规则筛掉高风险标的，输出更稳健的 `filter_ret` 表
 
@@ -51,8 +51,8 @@ graph LR
 
 - **数据**：自动从 [chenditc/investment_data](https://github.com/chenditc/investment_data) 拉取最新 A 股数据
 - **训练**：XGBoost、LightGBM、DoubleEnsemble、Linear，滚动 1～5 年历史
-- **筛选**：按 IC、ICIR、Rank IC 等指标筛出表现较好的模型
-- **预测**：多模型平均分数，生成 `xxx_ret`、`xxx_filter_ret` 汇总表
+- **筛选**：按 IC、ICIR、Rank IC 等指标筛出表现较好的模型, 并给出权重
+- **预测**：多模型加权平均分数，生成 `xxx_ret`、`xxx_filter_ret` 汇总表
 
 > 自动调度可能排队，实际执行可能延后。
 
