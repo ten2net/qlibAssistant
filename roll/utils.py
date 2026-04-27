@@ -21,7 +21,8 @@ DEFAULT_TIMEOUT = (10, 30)  # (连接超时, 读取超时)
 GITHUB_ASSETS_PATTERN = re.compile(r"expanded_assets")
 # MLflow 路径修复正则：使用命名组提高可读性
 MLFLOW_PATH_PATTERN = re.compile(
-    r"^(?P<key>artifact_(location|uri)):\s+file:///home/[^/]+/(?P<suffix>.*)"
+    r"^(?P<key>artifact_(location|uri)):\s+file:///home/[^/]+/(?P<suffix>.*)",
+    re.MULTILINE,
 )
 
 def check_match(str_a: str, pattern: str) -> bool:
