@@ -1,15 +1,6 @@
-# CLAUDE.md
+# CODEBUDDY.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## 强制规则：需求澄清优先
-
-在任何规划（plan）或新功能实现之前，我必须：
-1. **停止并列出所有需要了解的问题**（需求边界、技术约束、验收标准、异常处理、优先级、依赖关系等）
-2. **等待用户逐一回答**，不假设、不猜测、不填空
-3. **只有在所有关键问题得到明确答复后**，才能进入 `EnterPlanMode` 或开始编码
-
-**禁止行为**：不得在没有澄清的情况下直接进入计划模式或假设需求。即使任务看起来"简单"或" obvious"，也必须先列问题。
+This file provides guidance to CodeBuddy Code when working with code in this repository.
 
 ## Project Overview
 
@@ -50,7 +41,7 @@ Generate predictions for the latest trade date:
 cd ./roll && python ./roll.py model selection
 ```
 
-Review historical predictions ("马后炮"):
+Review historical predictions:
 ```bash
 cd ./roll && python ./roll.py model review
 ```
@@ -100,7 +91,7 @@ cd page && npm run docs:dev
 - This lazy initialization is intentional: pure data operations should not pay the cost of initializing Qlib.
 
 ### Training and model storage
-- `TrainCLI` uses Qlib’s `RollingGen` to produce time-segmented tasks. `my_enhanced_handler_mod` patches `fit_start_time` / `fit_end_time` into handler kwargs after the default rolling logic.
+- `TrainCLI` uses Qlib's `RollingGen` to produce time-segmented tasks. `my_enhanced_handler_mod` patches `fit_start_time` / `fit_end_time` into handler kwargs after the default rolling logic.
 - Training runs inside a `multiprocessing.Process` with `start_method="spawn"` (`run_train_blocking` in `traincli.py`). This isolates Qlib/numpy memory growth and avoids macOS fork safety issues.
 - Models are stored as MLflow experiments under `~/.qlibAssistant/mlruns`. Each experiment name follows the pattern: `<pfx>_<ModelClass>_<Dataset>_<Pool>_<rolling>_step<N>_<sfx>_<timestamp>`.
 - `model_backup.py` compresses `~/.qlibAssistant/mlruns` into `model_pkl/mlruns_YYYY-MM-DD.tar.gz` (and decompresses back). CI commits these tarballs to `main` and uploads them to GitHub Releases.
@@ -119,7 +110,7 @@ The label being predicted is: `Ref($close, -2)/Ref($close, -1) - 1`. This means:
 ### Review and backtest
 - `model_review.py` (`ModelReviewHelper`) implements post-hoc review (`review`) and backtest (`backtest`).
 - Review compares predicted scores against realized next-day returns, computing top-k win rates and average returns per selection bucket.
-- Backtest simulates daily rebalanced top-k portfolios against CSI300, computes turnover, net returns after fees, and equity curves. Results land in `../backtest_csv/` and `../review_csv/`.
+- Backtest simulates daily rebalanced top-k portfolios against CSI300, computes turnover, net returns after fees, and equity curves. Results land in `backtest_csv/` and `review_csv/`.
 
 ### Page generation
 - `page/script/gen_page.py` scans `qlib_score_csv/` and `backtest_csv/` to generate VitePress Markdown pages under `page/docs/`.

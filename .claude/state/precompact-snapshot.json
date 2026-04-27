@@ -1,0 +1,90 @@
+{
+  "artifactType": "precompact-snapshot",
+  "context_reset": {
+    "policy": {
+      "mode": "auto",
+      "dryRun": false,
+      "thresholds": {
+        "wipTasks": 4,
+        "blockedTasks": 1,
+        "recentEdits": 8,
+        "failedChecks": 1,
+        "sessionAgeMinutes": 120
+      }
+    },
+    "recommended": true,
+    "summary": "Context reset recommended (auto): 11 recent edit count exceed threshold 8",
+    "reasons": [
+      "11 recent edit count exceed threshold 8"
+    ],
+    "candidates": [
+      {
+        "key": "wip_tasks",
+        "label": "WIP task count",
+        "actual": 0,
+        "threshold": 4,
+        "triggered": false
+      },
+      {
+        "key": "blocked_tasks",
+        "label": "blocked task count",
+        "actual": 0,
+        "threshold": 1,
+        "triggered": false
+      },
+      {
+        "key": "recent_edits",
+        "label": "recent edit count",
+        "actual": 11,
+        "threshold": 8,
+        "triggered": true
+      },
+      {
+        "key": "failed_checks",
+        "label": "failed check count",
+        "actual": 0,
+        "threshold": 1,
+        "triggered": false
+      },
+      {
+        "key": "session_age_minutes",
+        "label": "session age (minutes)",
+        "actual": 0,
+        "threshold": 120,
+        "triggered": false
+      }
+    ],
+    "counters": {
+      "wipTasks": 0,
+      "blockedTasks": 0,
+      "recentEdits": 11,
+      "failedChecks": 0,
+      "sessionAgeMinutes": null
+    }
+  },
+  "continuity": {
+    "plugin_first_workflow": true,
+    "resume_aware_effort_continuity": true,
+    "effort_hint": "medium",
+    "summary": "plugin-first workflow: enabled; resume-aware effort continuity: medium"
+  },
+  "legacy_version": "1.0.0",
+  "metrics": null,
+  "recentEdits": [
+    "tests/test_train.py",
+    ".claude/sessions/.last_inbox_check",
+    ".claude/state/changed-files.jsonl",
+    ".claude/state/handoff-artifact.json",
+    ".claude/state/instructions-loaded.jsonl",
+    ".claude/state/precompact-snapshot.json",
+    ".claude/state/runtime-reactive.jsonl",
+    ".codebuddy/settings.json",
+    ".coverage",
+    ".env",
+    "CODEBUDDY.md"
+  ],
+  "sessionId": "",
+  "timestamp": "2026-04-24T09:18:24Z",
+  "version": "1.0.0",
+  "wipTasks": null
+}

@@ -1,0 +1,7 @@
+{"event":"task_completed","teammate":"","task_id":"4","subject":"安装缺失的 Python 依赖","description":"安装 pyqlib xgboost catboost lightgbm mlflow fire mysql-connector-python 等缺失包","timestamp":"2026-04-24T12:23:15Z"}
+{"event":"task_completed","teammate":"","task_id":"5","subject":"解压模型文件","description":"解压 model_pkl/mlruns_2026-04-22.tar.gz 到 ~/.qlibAssistant/mlruns/","timestamp":"2026-04-24T12:23:15Z"}
+{"event":"task_completed","teammate":"","task_id":"9","subject":"安装前端依赖","description":"在 page/ 目录运行 npm install","timestamp":"2026-04-24T12:23:15Z"}
+{"event":"task_completed","teammate":"","task_id":"8","subject":"页面构建测试","description":"测试 npm run gen 和 npm run docs:build","timestamp":"2026-04-24T12:25:55Z"}
+{"event":"task_completed","teammate":"","task_id":"2","subject":"分析现有测试结构","description":"检查 tests/ 目录下的所有测试文件、fixture、测试覆盖范围，以及 pytest 配置","timestamp":"2026-04-26T23:49:03Z"}
+{"event":"task_completed","teammate":"","task_id":"3","subject":"验证项目依赖与环境","description":"检查 Python 依赖安装状态、qlib 数据可用性、模型文件是否存在、Node/npm 环境","timestamp":"2026-04-26T23:49:03Z"}
+{"event":"task_completed","teammate":"","task_id":"1","subject":"梳理可运行组件","description":"列出 roll.py 所有子命令、VitePress 页面构建、GitHub Actions 工作流等可执行组件","timestamp":"2026-04-26T23:49:03Z"}
